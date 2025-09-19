@@ -1,0 +1,73 @@
+Summary: Task Management API
+Version: 1.0.0
+BasePath: /api/v1
+Resource: tasks
+Operations:
+  - Operation: getTasks
+    Parameters:
+      - Name: projectId
+        In: query
+        Required: false
+        Type: string
+      - Name: assignee
+        In: query
+        Required: false
+        Type: string
+      - Name: status
+        In: query
+        Required: false
+        Type: string
+    Responses:
+      '200':
+        Description: A list of tasks
+        Schema:
+          Type: array
+          Items:
+            $ref: '#/definitions/Task'
+  - Operation: createTask
+    Parameters:
+      - Name: body
+        In: body
+        Required: true
+        Schema:
+          $ref: '#/definitions/NewTask'
+    Responses:
+      '201':
+        Description: Task created successfully
+        Schema:
+          $ref: '#/definitions/Task'
+  - Operation: updateTask
+    Parameters:
+      - Name: taskId
+        In: path
+        Required: true
+        Type: string
+      - Name: body
+        In: body
+        Required: true
+        Schema:
+          $ref: '#/definitions/UpdateTask'
+    Responses:
+      '200':
+        Description: Task updated successfully
+        Schema:
+          $ref: '#/definitions/Task'
+  - Operation: deleteTask
+    Parameters:
+      - Name: taskId
+        In: path
+        Required: true
+        Type: string
+    Responses:
+      '204':
+        Description: Task deleted successfully
+Definitions:
+  Task:
+    Type: object
+    Properties:
+      id:
+        Type: string
+      title:
+        Type: string
+      description:
+        Type: string
